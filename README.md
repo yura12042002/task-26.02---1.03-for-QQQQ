@@ -1,80 +1,82 @@
-# Учебный план: массивы и объекты в JavaScript (4 дня)
+# JS: массивы и объекты — 4 дня
 
-**Уровень:** начинающий+ / средний
-**Цель:** закрепить методы массивов, работу с объектами, чистые функции без мутаций
+## Как работать
 
----
+1. Открой файл дня (например `day1.js`)
+2. Читай условие в комментарии над функцией
+3. Пиши код вместо `// твой код`
+4. Запускай и смотри на `✅`/`❌`
 
-## Набор данных
+## Запуск тестов
 
-```js
-const users = [
-  { id: 1, name: "Alice", role: "admin", age: 30, city: "Moscow" },
-  { id: 2, name: "Bob", role: "user", age: 22, city: "Perm" },
-  { id: 3, name: "Charlie", role: "admin", age: 30, city: "Perm" },
-  { id: 4, name: "David", role: "moderator", age: 35, city: "Moscow" },
-  { id: 5, name: "Eva", role: "user", age: 22, city: "Moscow" },
-];
+```bash
+# Все тесты дня
+node day1.js
 
-const orders = [
-  { id: "o1", userId: 1, status: "created", amount: 100, currency: "USD" },
-  { id: "o2", userId: 2, status: "confirmed", amount: 250, currency: "USD" },
-  { id: "o3", userId: 2, status: "cancelled", amount: 80, currency: "EUR" },
-  { id: "o4", userId: 3, status: "confirmed", amount: 120, currency: "EUR" },
-  { id: "o5", userId: 1, status: "created", amount: 90, currency: "USD" },
-];
+# Тесты одной функции (фильтр по имени)
+FN=countBy node day1.js
+FN=filterWhere node day2.js
+FN=pick node day3.js
+FN=enrichOrders node day4.js
+
+# Все дни сразу
+node run.js
+
+# Один день через run.js
+node run.js 2
+```
+
+`FN=` — фильтр по имени секции. Показывает только тесты, в названии секции которых есть указанная подстрока (регистр не важен). Остальные тесты пропускаются.
+
+### Примеры
+
+```bash
+# Работаешь над countBy — запускаешь только его тесты:
+FN=countBy node day1.js
+
+# Результат:
+#   --- countBy ---
+#     ✅ users по role
+#     ✅ users по city
+#     ...
+#   Итого: ✅ 7  ❌ 0
+
+# Готов — запускаешь весь день:
+node day1.js
+
+# Готов весь день — запускаешь все:
+node run.js
 ```
 
 ---
 
-## Обзор плана
+## План
 
-| День | Тема | Задачи | Время |
-|------|------|--------|-------|
-| **1** | reduce: аккумуляция и подсчёт | sum, countByRole (×2), countBy, groupByAge | 60–90 мин |
-| **2** | универсальные утилиты | groupBy, indexBy, pluck, getAdults | 60–100 мин |
-| **3** | find/some/every/sort + orders | findFirstByRole, hasAnyRole, allFromCity, sortByAge, sumOrdersByCurrency, countOrdersByStatus | 70–110 мин |
-| **4** | композиция и рефакторинг | ordersByUser, buildReport, рефакторинг дублирования | 80–120 мин |
+| День | Файл | Задачи |
+|------|------|--------|
+| 1 | `day1.js` | `sum`, `countBy`, `groupBy`, `indexBy` |
+| 2 | `day2.js` | `pluck`, `filterWhere`, `findWhere`, `sortBy` |
+| 3 | `day3.js` | `someWhere`, `everyWhere`, `uniqBy`, `sumBy`, `pick`, `omit` |
+| 4 | `day4.js` | `enrichOrders`, `buildReport` |
 
----
-
-## Карта функций
-
-### Универсальные утилиты (работают с любыми данными):
-- `sum(numbers)` — сумма чисел
-- `countBy(array, key)` — подсчёт по ключу
-- `groupBy(array, key)` — группировка по ключу
-- `indexBy(array, key)` — индексация по ключу
-- `pluck(array, key)` — извлечение значений по ключу
-
-### Доменные функции (привязаны к users/orders):
-- `countByRole(users)` → обёртка над `countBy`
-- `groupByAge(users)` → обёртка над `groupBy`
-- `getAdults(users, minAge)` — filter
-- `findFirstByRole(users, role)` — find
-- `hasAnyRole(users, role)` — some
-- `allFromCity(users, city)` — every
-- `sortByAge(users, direction)` — sort без мутации
-- `sumOrdersByCurrency(orders)` — reduce
-- `countOrdersByStatus(orders)` → обёртка над `countBy`
-- `ordersByUser(orders)` → обёртка над `groupBy`
-- `buildReport(users, orders)` — композиция всех функций
+День 4 использует функции из дней 1–3. Скопируй свои готовые реализации в `day4.js`.
 
 ---
 
-## Ключевые принципы (сквозные на все 4 дня)
+## Структура файлов
 
-1. **Не мутировать** входные массивы и объекты
-2. **reduce с initialValue** — всегда
-3. **Пустой массив** — корректная обработка без ошибок
-4. **Один проход** — где указано, без вложенных циклов
-5. **Композиция** — переиспользовать функции, а не дублировать
+```
+day1.js      — задачи дня 1
+day2.js      — задачи дня 2
+day3.js      — задачи дня 3
+day4.js      — задачи дня 4
+testlib.js   — хелпер для тестов (не трогать)
+run.js       — запуск всех дней
+```
 
 ---
 
-## Файлы
+## Правила
 
-- [День 1](./day1.md) — reduce: аккумуляция и подсчёт
-- [День 2](./day2.md) — универсальные утилиты: groupBy, indexBy, pluck
-- [День 3](./day3.md) — find, some, every, sort + reduce по orders
-- [День 4](./day4.md) — композиция, buildReport, рефакторинг
+1. **Не мутировать** входные данные
+2. Все функции работают на `[]` без ошибок
